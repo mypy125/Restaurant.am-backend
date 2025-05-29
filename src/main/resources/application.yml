@@ -12,22 +12,25 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   datasource:
-    url: ${DB_URL}
+    url: ${DB_URL}?sslmode=disable&connectTimeout=5000&socketTimeout=30000
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 5
       connection-timeout: 30000
-      idle-timeout: 600000
+      initialization-fail-timeout: 0
+      pool-name: RestaurantHikariPool
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
+        jdbc:
+          time_zone: Asia/Yerevan
 
   mail:
     host: ${MAIL_HOST}
@@ -57,4 +60,6 @@ spring:
 
 logging:
   level:
-    org.springframework.boot.context.properties: DEBUG
+    org.hibernate.SQL: WARN
+    org.springframework: INFO
+    com.mygitgor.restaurant: INFO
