@@ -12,9 +12,9 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   datasource:
-    url: ${DB_URL}?sslmode=disable&connectTimeout=5000&socketTimeout=30000
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${LOCAL_DB_URL}?sslmode=disable&connectTimeout=5000&socketTimeout=30000
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
@@ -63,3 +63,4 @@ logging:
     org.hibernate.SQL: WARN
     org.springframework: INFO
     com.mygitgor.restaurant: INFO
+    org.springframework.boot.context.properties: DEBUG

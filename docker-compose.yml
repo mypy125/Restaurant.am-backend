@@ -10,11 +10,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-restaurant_db}
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - "5433:5432"
+      - "5435:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-restaurant_user}"]
+      test: ["CMD-SHELL", "pg_isready -U restaurant_user -d restaurant_db"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -27,7 +27,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@restaurant.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin123}
     ports:
-      - "5051:5050"
+      - "5052:5050"
 
   app:
     container_name: restaurant_app
