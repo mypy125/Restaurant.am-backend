@@ -53,7 +53,10 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @PutMapping("/{id}/remove-favorites")
     public ResponseEntity<Void> removeRestaurantFromFavorites(@RequestHeader("Authorization") String jwt,
                                                                 @PathVariable Long id) throws Exception {

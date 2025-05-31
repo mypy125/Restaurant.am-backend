@@ -47,7 +47,10 @@ public class AuthController {
      * @return возврошает JWT токен, сообщение об успешной регистрации и роль пользователя.
      * @throws Exception бросает исключения Exception
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody RegisterRequest request) throws Exception {
         User isEmailExist = userRepository.findByEmail(request.getEmail());
@@ -85,7 +88,10 @@ public class AuthController {
      * @param request данные аутентификации (логин и пароль)
      * @return возврошает JWT токен, сообщение об успешной аутентификации и роль пользователя.
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest request){
         String username = request.getEmail();

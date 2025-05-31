@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @SneakyThrows
     @GetMapping("/profile")
     public ResponseEntity<User> findUserByJwtToken(@RequestHeader("Authorization") String jwt){
@@ -27,7 +30,10 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @PutMapping("/profile")
     public ResponseEntity<Void> updateUserProfile(@RequestBody UserProfileDto userProfileDto,
                                                      @RequestHeader("Authorization") String jwt) throws Exception {

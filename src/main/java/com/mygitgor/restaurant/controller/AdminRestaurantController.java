@@ -25,7 +25,10 @@ public class AdminRestaurantController {
 
     @SneakyThrows
     @PreAuthorize("hasAnyRole('OWNER', 'ADMIN')")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     @PostMapping()
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody CreateRestaurantRequest request,
                                                        @RequestHeader("Authorization") String jwt){
@@ -65,7 +68,10 @@ public class AdminRestaurantController {
 
     @PutMapping("/{id}/status")
     @SneakyThrows
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://restaurant-frontend-9jwn.onrender.com"
+    })
     public ResponseEntity<Restaurant> updateRestaurantStatus(@RequestHeader("Authorization") String jwt,
                                                             @PathVariable Long id){
         User user = userService.findUserByJwtToken(jwt);
