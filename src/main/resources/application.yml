@@ -63,3 +63,5 @@ logging:
     root: INFO
     org.hibernate.SQL: WARN
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate: DEBUG
+    com.zaxxer.hikari: TRACE
