@@ -25,8 +25,9 @@ public class Order extends BaseEntity{
     private String orderStatus;
     private Date createAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @ManyToOne
     private Address deliveryAddress;
 
     @OneToMany

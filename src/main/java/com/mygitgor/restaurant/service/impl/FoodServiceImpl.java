@@ -66,8 +66,7 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public void deleteFood(Long foodId) throws Exception {
         Food food = findFoodById(foodId);
-        food.setRestaurant(null);
-        foodRepository.save(food);
+        foodRepository.delete(food);
     }
 
     /**
