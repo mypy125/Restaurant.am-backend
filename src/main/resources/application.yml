@@ -12,6 +12,9 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   datasource:
+#    url: ${LOCAL_DB_URL}
+#    username: ${LOCAL_DB_USERNAME}
+#    password: ${LOCAL_DB_PASSWORD}
     url: ${DB_URL}?sslmode=require
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -24,7 +27,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
