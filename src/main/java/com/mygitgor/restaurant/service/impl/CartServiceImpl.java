@@ -14,6 +14,7 @@ import com.mygitgor.restaurant.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -57,6 +58,17 @@ public class CartServiceImpl implements CartService {
 
         cart.getItem().add(saveCartItem);
         return saveCartItem;
+    }
+
+    @Override
+    public List<CartItem> findUserCartItems(String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
+        Cart cart = cartRepository.findByCustomerId(user.getId());
+
+        if (cart == null) {
+            throw new Exception("Cart not found for user: " + user.getId());
+        }
+        return cart.getItem();
     }
 
     /**

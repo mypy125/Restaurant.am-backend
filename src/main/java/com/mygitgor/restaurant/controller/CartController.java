@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * CartController управляет операциями, связанными с корзиной пользователя.
  */
@@ -27,9 +29,17 @@ public class CartController {
     @SneakyThrows
     @PutMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest request,
-                                                  @RequestHeader("Authorization") String jwt){
+                                                  @RequestHeader("Authorization") String jwt
+    ){
         CartItem cartItem = cartService.addItemToCart(request, jwt);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
+    }
+
+    @GetMapping("/cart/items")
+    public ResponseEntity<List<CartItem>> findAllItemsCart(@RequestHeader("Authorization") String jwt)throws Exception
+    {
+        List<CartItem> allCartItems = cartService.findUserCartItems(jwt);
+        return new ResponseEntity<>(allCartItems, HttpStatus.OK);
     }
 
     @SneakyThrows
