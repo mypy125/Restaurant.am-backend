@@ -61,13 +61,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItem> findUserCartItems(String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
-        Cart cart = cartRepository.findByCustomerId(user.getId());
-
-        if (cart == null) {
-            throw new Exception("Cart not found for user: " + user.getId());
-        }
+    public List<CartItem> getAllCartItems(Long cartId) throws Exception {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new Exception("Cart not found with id: " + cartId));
         return cart.getItem();
     }
 
@@ -174,4 +170,10 @@ public class CartServiceImpl implements CartService {
         cart.getItem().clear();
         return cartRepository.save(cart);
     }
+
+    public boolean isCartOwnedByUser(Long cartId, Long userId) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);
+        return cartOptional.isPresent() && cartOptional.get().getCustomer().getId().equals(userId);
+    }
+
 }

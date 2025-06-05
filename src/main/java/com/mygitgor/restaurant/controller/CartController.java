@@ -35,10 +35,15 @@ public class CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    @GetMapping("/cart/items")
-    public ResponseEntity<List<CartItem>> findAllItemsCart(@RequestHeader("Authorization") String jwt)throws Exception
+    @GetMapping("/cart/{cartId}/items")
+    public ResponseEntity<List<CartItem>> findAllItemsCart(@PathVariable Long cartId,
+                                                            @RequestHeader("Authorization") String jwt)throws Exception
     {
-        List<CartItem> allCartItems = cartService.findUserCartItems(jwt);
+        User user = userService.findUserByJwtToken(jwt);
+//        if (!cartService.isCartOwnedByUser(cartId, user.getId())) {
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+        List<CartItem> allCartItems = cartService.getAllCartItems(cartId);
         return new ResponseEntity<>(allCartItems, HttpStatus.OK);
     }
 
