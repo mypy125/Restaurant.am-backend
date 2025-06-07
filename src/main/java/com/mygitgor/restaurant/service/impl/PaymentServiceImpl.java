@@ -28,12 +28,13 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse createStripePaymentLink(Order order) throws Exception {
         Stripe.apiKey = config.getStripeApiKey();
+        String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         SessionCreateParams params = SessionCreateParams.builder().addPaymentMethodType(
                 SessionCreateParams
                         .PaymentMethodType.CARD)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:3000/payment/success/"+order.getId())
-                .setCancelUrl("http://localhost:3000/payment/fail")
+                .setSuccessUrl(frontendUrl + "/payment/success/" + order.getId())
+                .setCancelUrl(frontendUrl + "/payment/fail")
                 .addLineItem(SessionCreateParams.LineItem.builder()
                         .setQuantity(1L).setPriceData(SessionCreateParams.LineItem.PriceData.builder()
                                 .setCurrency("usd")
@@ -55,13 +56,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createIdramPaymentLink(Order order) throws IOException, JSONException {
+        String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         JSONObject requestData = new JSONObject();
         requestData.put("merchant_id", "YOUR_MERCHANT_ID");
         requestData.put("order_id", order.getId());
         requestData.put("amount", order.getTotalAmount());
         requestData.put("currency", "AMD");
-        requestData.put("return_url", "http://localhost:3000/payment/success/" + order.getId());
-        requestData.put("cancel_url", "http://localhost:3000/payment/fail");
+        requestData.put("return_url", frontendUrl + "/payment/success/" + order.getId());
+        requestData.put("cancel_url",frontendUrl + "/payment/fail");
 
         HttpURLConnection connection = createHttpConnection(config.getIdramApiUrl(), config.getIdramApiKey());
 
@@ -76,12 +78,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createEasyPayPaymentLink(Order order) throws IOException, JSONException {
+        String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         JSONObject requestData = new JSONObject();
         requestData.put("amount", order.getTotalAmount());
         requestData.put("currency", "AMD");
         requestData.put("orderId", order.getId());
-        requestData.put("successUrl", "http://localhost:3000/payment/success/" + order.getId());
-        requestData.put("cancelUrl", "http://localhost:3000/payment/fail");
+        requestData.put("successUrl", frontendUrl + "/payment/success/" + order.getId());
+        requestData.put("cancelUrl", frontendUrl + "/payment/fail");
 
         HttpURLConnection connection = createHttpConnection(config.getEasypayApiUrl(), config.getEasypayApiKey());
 
