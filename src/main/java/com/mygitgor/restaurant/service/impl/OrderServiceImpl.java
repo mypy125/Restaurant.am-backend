@@ -1,12 +1,11 @@
 package com.mygitgor.restaurant.service.impl;
 
 import com.mygitgor.restaurant.domain.*;
-import com.mygitgor.restaurant.dto.AddressDto;
+import com.mygitgor.restaurant.repository.AddressRepository;
 import com.mygitgor.restaurant.repository.OrderItemRepository;
 import com.mygitgor.restaurant.repository.OrderRepository;
 import com.mygitgor.restaurant.repository.UserRepository;
 import com.mygitgor.restaurant.controller.DTOs.request.OrderRequest;
-import com.mygitgor.restaurant.service.AddressService;
 import com.mygitgor.restaurant.service.CartService;
 import com.mygitgor.restaurant.service.OrderService;
 import com.mygitgor.restaurant.service.RestaurantService;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
-    private final AddressService addressService;
+    private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final RestaurantService restaurantService;
     private final CartService cartService;
@@ -42,8 +41,13 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Order createOrder(OrderRequest request, User user) throws Exception {
-        AddressDto shopAddress = request.getDeliveryAddress();
-        Address savedAddress = addressService.saveUserAddress(shopAddress, user);
+        Address shopAddress = request.getDeliveryAddress();
+        Address savedAddress = addressRepository.save(shopAddress);
+
+        if(!user.getAddresses().contains(savedAddress)){
+            user.getAddresses().add(savedAddress);
+            userRepository.save(user);
+        }
 
         Restaurant restaurant = restaurantService.findRestaurantById(request.getRestaurantId());
 

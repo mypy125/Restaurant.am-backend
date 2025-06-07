@@ -4,10 +4,10 @@ import com.mygitgor.restaurant.domain.Address;
 import com.mygitgor.restaurant.domain.Restaurant;
 import com.mygitgor.restaurant.domain.User;
 import com.mygitgor.restaurant.dto.RestaurantDto;
+import com.mygitgor.restaurant.repository.AddressRepository;
 import com.mygitgor.restaurant.repository.RestaurantRepository;
 import com.mygitgor.restaurant.repository.UserRepository;
 import com.mygitgor.restaurant.controller.DTOs.request.CreateRestaurantRequest;
-import com.mygitgor.restaurant.service.AddressService;
 import com.mygitgor.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRepository userRepository;
-    private final AddressService addressService;
+    private final AddressRepository addressRepository;
 
 
     /**
@@ -40,7 +40,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             throw new RuntimeException("A restaurant already exists for this owner.");
         }
 
-        Address address = addressService.saveUserAddress(request.getAddress(), user);
+        Address address = addressRepository.save(request.getAddress());
 
         Restaurant restaurant = new Restaurant();
         restaurant.setAddress(address);
