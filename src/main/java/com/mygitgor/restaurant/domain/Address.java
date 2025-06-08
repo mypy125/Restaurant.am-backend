@@ -17,7 +17,7 @@ public class Address extends BaseEntity{
     private String postalCode;
     private String country;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
