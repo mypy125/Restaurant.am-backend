@@ -3,8 +3,6 @@ package com.mygitgor.restaurant.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Entity
 @Getter
 @Setter
@@ -17,7 +15,7 @@ public class Address extends BaseEntity{
     private String postalCode;
     private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
