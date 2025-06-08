@@ -40,10 +40,12 @@ public class RestaurantServiceImpl implements RestaurantService {
             throw new RuntimeException("A restaurant already exists for this owner.");
         }
 
-        Address address = addressRepository.save(request.getAddress());
+        Address address = request.getAddress();
+        address.setUser(user);
+        Address savedAddress = addressRepository.save(address);
 
         Restaurant restaurant = new Restaurant();
-        restaurant.setAddress(address);
+        restaurant.setAddress(savedAddress);
         restaurant.setContactInformation(request.getContactInformation());
         restaurant.setCuisineType(request.getCuisineType());
         restaurant.setDescription(request.getDescription());
