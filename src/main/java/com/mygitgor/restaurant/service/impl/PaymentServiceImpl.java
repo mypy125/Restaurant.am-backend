@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createStripePaymentLink(Order order) throws Exception {
-        Stripe.apiKey = config.getStripeApiKey();
+        Stripe.apiKey = config.getStripeApiSKey();
         String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         SessionCreateParams params = SessionCreateParams.builder().addPaymentMethodType(
                 SessionCreateParams
