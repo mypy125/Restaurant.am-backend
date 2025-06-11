@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createStripePaymentLink(Order order) throws Exception {
-        Stripe.apiKey = config.getStripeApiSKey();
+        Stripe.apiKey = config.getStripe().getSecretKey();
         String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         SessionCreateParams params = SessionCreateParams.builder().addPaymentMethodType(
                 SessionCreateParams
@@ -65,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
         requestData.put("return_url", frontendUrl + "/payment/success/" + order.getId());
         requestData.put("cancel_url",frontendUrl + "/payment/fail");
 
-        HttpURLConnection connection = createHttpConnection(config.getIdramApiUrl(), config.getIdramApiKey());
+        HttpURLConnection connection = createHttpConnection(config.getIdram().getApiUrl(), config.getIdram().getApiKey());
 
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = requestData.toString().getBytes(StandardCharsets.UTF_8);
@@ -86,7 +86,7 @@ public class PaymentServiceImpl implements PaymentService {
         requestData.put("successUrl", frontendUrl + "/payment/success/" + order.getId());
         requestData.put("cancelUrl", frontendUrl + "/payment/fail");
 
-        HttpURLConnection connection = createHttpConnection(config.getEasypayApiUrl(), config.getEasypayApiKey());
+        HttpURLConnection connection = createHttpConnection(config.getEasypay().getApiUrl(), config.getEasypay().getApiKey());
 
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = requestData.toString().getBytes(StandardCharsets.UTF_8);

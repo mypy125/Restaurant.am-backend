@@ -8,12 +8,30 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-//@ConfigurationProperties(prefix = "payment")
+@ConfigurationProperties(prefix = "payment")
 public class PaymentConfig {
-    private final String stripeApiSKey="sk_test_51RYlRDFLKIElximnd31WDpwdnZGJXilpkHGZOIURPKsqaF4u4C3CRIzGByiNT2nd8z5L3LyghImseaixqLxzxNNi00Zf8KPtcB";
-    private String idramApiKey;
-    private String idramApiUrl;
-    private String easypayApiUrl;
-    private String easypayApiKey;
+    private StripeConfig stripe;
+    private IdramConfig idram;
+    private EasypayConfig easypay;
 
+    @Getter
+    @Setter
+    public static class StripeConfig {
+        private String secretKey;
+        private String publishableKey;
+    }
+
+    @Getter
+    @Setter
+    public static class IdramConfig {
+        private String apiUrl;
+        private String apiKey;
+    }
+
+    @Getter
+    @Setter
+    public static class EasypayConfig {
+        private String apiUrl;
+        private String apiKey;
+    }
 }

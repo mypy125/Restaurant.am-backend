@@ -47,20 +47,16 @@ spring:
           starttls:
             enable: ${MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE}
 
-  payment:
-    stripe:
-      api:
-        key: ${STRIPE_API_KEY}
-
-    idram:
-      api:
-        url: ${IDRAM_API_URL}
-        key: ${IDRAM_API_KEY}
-
-    easypay:
-      api:
-        url: ${EASYPAY_API_URL}
-        key: ${EASYPAY_API_KEY}
+payment:
+  stripe:
+    secret-key: ${STRIPE_SECRET_KEY}
+    publishable-key: ${STRIPE_PUBLISHABLE_KEY}
+  idram:
+    api-url: ${IDRAM_API_URL}
+    api-key: ${IDRAM_API_KEY}
+  easypay:
+    api-url: ${EASYPAY_API_URL}
+    api-key: ${EASYPAY_API_KEY}
 
 logging:
   level:
