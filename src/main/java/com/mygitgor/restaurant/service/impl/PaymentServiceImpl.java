@@ -24,10 +24,11 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
    private final PaymentConfig config;
+   private final String stripe = "pk_test_51PLoRORv4Iso1jMzem1wp8wTkEdzMdrirTxOeFUpwXDYpOjdH6wYOYS5pcI7hRCZkC83xDJ6zyvALuc3mxbqVPti00Gc3fHV4G";
 
     @Override
     public PaymentResponse createStripePaymentLink(Order order) throws Exception {
-        Stripe.apiKey = config.getStripeApiKey();
+        Stripe.apiKey = stripe;
         String frontendUrl = "https://restaurant-frontend-9jwn.onrender.com";
         SessionCreateParams params = SessionCreateParams.builder().addPaymentMethodType(
                 SessionCreateParams
