@@ -1,15 +1,14 @@
 package com.mygitgor.restaurant.service.impl;
 
 import com.mygitgor.restaurant.domain.*;
-import com.mygitgor.restaurant.repository.AddressRepository;
-import com.mygitgor.restaurant.repository.OrderItemRepository;
-import com.mygitgor.restaurant.repository.OrderRepository;
-import com.mygitgor.restaurant.repository.UserRepository;
+import com.mygitgor.restaurant.repository.*;
 import com.mygitgor.restaurant.controller.DTOs.request.OrderRequest;
 import com.mygitgor.restaurant.service.CartService;
 import com.mygitgor.restaurant.service.OrderService;
 import com.mygitgor.restaurant.service.RestaurantService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Order Service: Этот сервиз связаны с оформлением заказов.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -29,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
     private final CartService cartService;
 
 
@@ -138,11 +139,21 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<Order> getRestaurantsOrder(Long restaurantId, String orderStatus) throws Exception {
+        if (restaurantId == null) {
+            throw new IllegalArgumentException("Restaurant ID cannot be null");
+        }
+        restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Restaurant not found with id " + restaurantId));
         List<Order> orders = orderRepository.findByRestaurantId(restaurantId);
+
+        log.info("Fetching orders for restaurant {} with status {}", restaurantId, orderStatus);
+
         if(orderStatus != null){
             orders = orders.stream().filter(order ->
                     order.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
         }
+        log.info("Found {} orders for restaurant {}", orders.size(), restaurantId);
         return orders;
     }
 

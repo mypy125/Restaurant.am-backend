@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * AdminOrderController определяется конечные точки для управления заказами в панели администратора.
  */
+@Slf4j
 @RestController
 @RequestMapping("api/admin")
 @RequiredArgsConstructor
@@ -23,14 +25,13 @@ public class AdminOrderController {
     private final UserService userService;
 
     @SneakyThrows
-    @GetMapping("/order/restaurant/{id}")
-    public ResponseEntity<List<Order>> getOrderHistory(@PathVariable Long id,
+    @GetMapping("/order/restaurant/{restaurantId}")
+    public ResponseEntity<List<Order>> getOrderHistory(@PathVariable Long restaurantId,
                                                        @RequestParam(required = false) String order_status,
                                                        @RequestHeader("Authorization") String jwt){
 
         User user = userService.findUserByJwtToken(jwt);
-
-        List<Order> order = orderService.getRestaurantsOrder(id, order_status);
+        List<Order> order = orderService.getRestaurantsOrder(restaurantId, order_status);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
