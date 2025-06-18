@@ -28,7 +28,8 @@ public class Order extends BaseEntity{
     @ManyToOne
     private Address deliveryAddress;
 
-    @OneToMany
+//    @OneToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> items;
 
     @OneToOne(cascade = CascadeType.ALL)
