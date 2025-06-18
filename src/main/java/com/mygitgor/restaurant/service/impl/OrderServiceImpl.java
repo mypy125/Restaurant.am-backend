@@ -142,17 +142,21 @@ public class OrderServiceImpl implements OrderService {
         if (restaurantId == null) {
             throw new IllegalArgumentException("Restaurant ID cannot be null");
         }
+
         restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Restaurant not found with id " + restaurantId));
+
         List<Order> orders = orderRepository.findByRestaurantId(restaurantId);
 
-        log.info("Fetching orders for restaurant {} with status {}", restaurantId, orderStatus);
+        log.info("Fetching orders for restaurant {} with status '{}'", restaurantId, orderStatus);
 
-        if(orderStatus != null){
-            orders = orders.stream().filter(order ->
-                    order.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
+        if (orderStatus != null && !orderStatus.isBlank()) {
+            orders = orders.stream()
+                    .filter(order -> order.getOrderStatus().equalsIgnoreCase(orderStatus))
+                    .collect(Collectors.toList());
         }
+
         log.info("Found {} orders for restaurant {}", orders.size(), restaurantId);
         return orders;
     }
