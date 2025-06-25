@@ -40,7 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
                                 .setCurrency("usd")
                                 .setUnitAmount((long)order.getTotalPrice()*100)
                                 .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                        .setName("taco food")
+                                        .setName("restaurant.am")
                                         .build())
                                 .build()
                         ).build()
