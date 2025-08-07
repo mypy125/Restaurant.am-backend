@@ -3,7 +3,6 @@ server:
 dotenv:
   enabled: true
   override: true
-
 spring:
   jackson:
     default-property-inclusion: non_null
