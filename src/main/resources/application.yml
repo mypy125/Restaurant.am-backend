@@ -1,8 +1,10 @@
 server:
   port: 8080
+
 dotenv:
   enabled: true
   override: true
+
 spring:
   jackson:
     default-property-inclusion: non_null
@@ -56,11 +58,3 @@ payment:
   easypay:
     api-url: ${EASYPAY_API_URL}
     api-key: ${EASYPAY_API_KEY}
-
-logging:
-  level:
-    root: INFO
-    org.hibernate.SQL: WARN
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    org.hibernate: DEBUG
-    com.zaxxer.hikari: TRACE
