@@ -2,14 +2,15 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.mygitgor.ecommerce_multivendor" level="DEBUG"/>
-    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="com.mygitgor.restaurant" level="DEBUG"/>
+    <logger name="org.springframework.security" level="DEBUG"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
-    <logger name="com.zaxxer.hikari" level="TRACE"/>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
